@@ -1,9 +1,9 @@
 class MyQueue:
     def __init__(self) -> None:
         self._capacity = 4
-        self._arr = [None]*self._capacity
-        self._head_idx = 0
-        self._tail_idx = 0
+        self._arr = []
+        self._front_idx = 0
+        self._rear_idx = 0
 
     def __str__(self) -> str:
         return f'MyQueue({self._arr})'
@@ -19,17 +19,21 @@ class MyQueue:
             raise OverflowError("Queue is full, can't enqueue")
         else:
             self._arr.append(item)
+            self._rear_idx += 1
 
     def dequeue(self):
-        if self._tail_idx == self._head_idx:
+        if self._rear_idx == self._front_idx:
             raise ValueError("Queue is empty, can't dequeue")
         else:
-            temp = self._arr[self._head_idx]
-            self._arr[self._head_idx] = None
-            self._head_idx += 1
+            temp = self._arr.pop(0)
+            self._rear_idx -= 1
             return temp
         
 if __name__=='__main__':
-    q = MyQueue()
-    q.enqueue(1)
-    print(q)
+    queue = MyQueue()
+    queue.enqueue(1)
+    queue.enqueue(20)
+    queue.enqueue(3)
+    print(queue)
+    print(queue.dequeue())
+    print(queue)
